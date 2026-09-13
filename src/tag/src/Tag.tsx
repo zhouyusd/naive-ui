@@ -2,7 +2,8 @@ import type { CSSProperties, PropType, Ref, SlotsType, VNode } from 'vue'
 import type { ThemeProps } from '../../_mixins'
 import type { ExtractPublicPropTypes, MaybeArray } from '../../_utils'
 import type { TagTheme, TagThemeOverrides } from '../styles'
-import { getMargin } from 'seemly'
+import type { TagColor } from './common-props'
+import { getMargin, rgba } from 'seemly'
 import {
   computed,
   defineComponent,
@@ -26,6 +27,18 @@ import {
 import { tagLight } from '../styles'
 import commonProps from './common-props'
 import style from './styles/index.cssr'
+
+function resolveColor(color: string | TagColor | undefined): TagColor {
+  if (typeof color === 'string') {
+    const [r, g, b] = rgba(color)
+    return {
+      color: `rgba(${r}, ${g}, ${b}, 0.1)`,
+      borderColor: `rgba(${r}, ${g}, ${b}, 0.3)`,
+      textColor: color
+    }
+  }
+  return color || {}
+}
 
 export interface TagPublicMethods {
   setTextContent: (textContent: string) => void
@@ -111,6 +124,7 @@ export default defineComponent({
       props,
       mergedClsPrefixRef
     )
+    const mergedColorRef = computed(() => resolveColor(props.color))
     provide(tagInjectionKey, {
       roundRef: toRef(props, 'round')
     })
@@ -152,7 +166,8 @@ export default defineComponent({
     }
     const rtlEnabledRef = useRtl('Tag', mergedRtlRef, mergedClsPrefixRef)
     const cssVarsRef = computed(() => {
-      const { type, color: { color, textColor } = {} } = props
+      const { type } = props
+      const { color, textColor } = mergedColorRef.value
       const size = mergedSizeRef.value
       const {
         common: { cubicBezierEaseInOut },
@@ -232,7 +247,8 @@ export default defineComponent({
           'tag',
           computed(() => {
             let hash = ''
-            const { type, color: { color, textColor } = {} } = props
+            const { type } = props
+            const { color, textColor } = mergedColorRef.value
             hash += type[0]
             hash += mergedSizeRef.value[0]
             if (color) {
@@ -255,6 +271,7 @@ export default defineComponent({
       rtlEnabled: rtlEnabledRef,
       mergedClsPrefix: mergedClsPrefixRef,
       contentRef,
+      mergedColor: mergedColorRef,
       mergedBordered: mergedBorderedRef,
       handleClick,
       handleCloseClick,
@@ -270,7 +287,7 @@ export default defineComponent({
       mergedClsPrefix,
       rtlEnabled,
       closable,
-      color: { borderColor } = {},
+      mergedColor: { borderColor },
       round,
       onRender,
       $slots

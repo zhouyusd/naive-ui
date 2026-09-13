@@ -151,6 +151,23 @@ describe('n-tag', () => {
     )
   })
 
+  it('should convert a string `color` prop to tag colors', () => {
+    const wrapper = mount(NTag, {
+      props: {
+        color: '#18a058'
+      }
+    })
+    expect(wrapper.find('.n-tag').attributes('style')).toContain(
+      '--n-color: rgba(24, 160, 88, 0.1);'
+    )
+    expect(wrapper.find('.n-tag').attributes('style')).toContain(
+      '--n-text-color: #18a058;'
+    )
+    expect(wrapper.find('.n-tag__border').attributes('style')).toContain(
+      'border-color: rgba(24, 160, 88, 0.3);'
+    )
+  })
+
   it('should work with `avatar` slot', () => {
     const wrapper = mount(NTag, {
       slots: {

@@ -8,7 +8,7 @@ export interface TagColor {
 }
 
 export default {
-  color: Object as PropType<TagColor>,
+  color: [String, Object] as PropType<string | TagColor>,
   type: {
     type: String as PropType<
       'default' | 'primary' | 'success' | 'info' | 'warning' | 'error'

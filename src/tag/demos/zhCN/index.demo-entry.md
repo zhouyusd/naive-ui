@@ -28,7 +28,7 @@ rtl-debug.vue
 | checkable | `boolean` | `false` | 是否可以选择，使用后 type 将不生效 |  |
 | checked | `boolean` | `false` | 是否被选中，配合 checkable 一起使用 |  |
 | closable | `boolean` | `false` | 是否可关闭 |  |
-| color | `{ color?: string, borderColor?: string, textColor?: string }` | `undefined` | 标签颜色，设置该项后 `type` 无效 |  |
+| color | `string \| { color?: string, borderColor?: string, textColor?: string }` | `undefined` | 标签颜色。传入字符串时，它会作为文字颜色，并以 10% 和 30% 的不透明度分别生成背景色和边框色。设置该项后 `type` 无效 |  |
 | disabled | `boolean` | `false` | 是否禁用 |  |
 | round | `boolean` | `false` | 是否圆角 |  |
 | size | `'tiny' \| 'small' \| 'medium' \| 'large'` | `'medium'` | 尺寸 |  |

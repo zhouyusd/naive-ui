@@ -27,7 +27,7 @@ icon.vue
 | checkable | `boolean` | `false` | Whether the tag is checkable. Note: this nullifies the type property. |  |
 | checked | `boolean` | `false` | Whether the tag is checked. Note: used with `checkable`. |  |
 | closable | `boolean` | `false` | Whether the tag shows a close button. |  |
-| color | `{ color?: string, borderColor?: string, textColor?: string }` | `undefined` | Color of the tag. Note: this will override the type property's color. |  |
+| color | `string \| { color?: string, borderColor?: string, textColor?: string }` | `undefined` | Color of the tag. A string is used as the text color, with 10% opacity for the background and 30% opacity for the border. Note: this will override the type property's color. |  |
 | disabled | `boolean` | `false` | Whether the tag is disabled. |  |
 | round | `boolean` | `false` | Whether the tag has rounded corners. |  |
 | size | `'tiny' \| 'small' \| 'medium' \| 'large'` | `'medium'` | Size of the tag. |  |
